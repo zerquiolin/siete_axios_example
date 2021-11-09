@@ -1,0 +1,19 @@
+.product__card {
+  width: fit-content;
+  height: fit-content;
+  margin: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px black;
+}
+
+.App {
+  display: flex;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

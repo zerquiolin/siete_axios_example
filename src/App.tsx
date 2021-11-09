@@ -1,24 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+
+// Component
+import ProductCard from "./View/Components/ProductCard";
+
+// Axios
+import { fetchAllProducts } from "./Controller/ProductController";
+
+// Style
+import "./Util/Sass/App.scss";
+
+// Interfaces
+import { IProduct } from "./Util/Interfaces";
 
 function App() {
+  // handlers
+  const updateProductListHandler = async () => {
+    const response = await fetchAllProducts();
+    const data = await response.data;
+    setProductList(await data);
+  };
+  // useState
+  const [productList, setProductList] = useState<Array<IProduct>>([
+    {
+      IdProducto: 0,
+      NombreProducto: "Default Name",
+      PrecioCompra: 0,
+      Iva: false,
+      PrecioVenta: 0,
+      Imagen: "",
+      IdMarca: 0,
+      Cantidad: 0,
+    },
+  ]);
+  // useEffect
+  useEffect(() => {
+    updateProductListHandler();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {productList.map((product) => (
+        <ProductCard
+          title={product.NombreProducto}
+          precio={product.PrecioVenta}
+          cantidad={product.Cantidad}
+        />
+      ))}
     </div>
   );
 }
